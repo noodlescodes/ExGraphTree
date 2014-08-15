@@ -1,3 +1,6 @@
+#ifndef NATHAN_VAN_MAASTRICHT_MATRIX
+#define NATHAN_VAN_MAASTRICHT_MATRIX
+
 #include <vector>
 #include <cstdlib>
 #include <ostream>
@@ -30,3 +33,4 @@ namespace VAN_MAASTRICHT {
 	Matrix operator *(const Matrix& m1, const Matrix& m2);
 	Matrix operator %(const Matrix& m1, const Matrix& m2); // hadamard product
 }
+#endif

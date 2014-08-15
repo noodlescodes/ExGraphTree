@@ -1,4 +1,4 @@
-SOURCES=test.cpp Matrix.cpp BTNode.h
+SOURCES=test.cpp Explorer.cpp Matrix.cpp BTNode.h BTree.h
 EXECUTABLE=test
 CC=g++
 CFLAGS=-c -Wall
