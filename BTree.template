@@ -1,0 +1,34 @@
+#include "BTNode.h"
+#include <cstdlib>
+#include <iostream>
+
+using namespace std;
+using VAN_MAASTRICHT::BTNode;
+using VAN_MAASTRICHT::BTree;
+
+namespace VAN_MAASTRICHT {
+	template <class Item>
+	BTree<Item>::BTree(BTNode<Item>* rt) {
+		root = rt;
+	}
+
+	template <class Item>
+	BTree<Item>::~BTree() {
+		root = NULL;
+	}
+
+	template <class Item>
+	BTNode<Item> *BTree<Item>::get_root() {
+		return root;
+	}
+
+	template <class Item>
+	const BTNode<Item> *BTree<Item>::get_root() const {
+		return root;
+	}
+
+	template <class Item>
+	void BTree<Item>::set_root(BTNode<Item>* rt) {
+		root = rt;
+	}
+}
