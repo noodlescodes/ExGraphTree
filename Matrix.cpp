@@ -4,6 +4,16 @@ namespace VAN_MAASTRICHT {
 	Matrix::Matrix(const vector<vector<int> > mat) {
 		matrix = mat;
 		s = mat.size();
+		number_edges = 0;
+		if(s != 0) {
+			for(unsigned int i = 0; i < s; i++) {
+				for(unsigned int j = 0; j < s; j++) {
+					if(matrix[i][j] == 1) {
+						number_edges++;
+					}
+				}
+			}
+		}
 	}
 
 	Matrix::~Matrix() {
@@ -15,6 +25,12 @@ namespace VAN_MAASTRICHT {
 			return -1;
 		}
 		else {
+			if((matrix[i][j] == 0) && (data == 1) ) {
+				number_edges++;
+			}
+			else if((matrix[i][j] ==  1) && (data == 0)) {
+				number_edges--;
+			}
 			matrix[i][j] = data;
 		}
 
@@ -45,11 +61,26 @@ namespace VAN_MAASTRICHT {
 		return s;
 	}
 
+	int Matrix::get_entry(unsigned int i, unsigned int j) {
+		if((i >= matrix.size()) || j >= matrix.size()) {
+			return -1;
+		}
+		return matrix[i][j];
+	}
+
 	const int Matrix::get_entry(unsigned int i, unsigned int j) const {
-		if((i >= matrix.size()) && j >= matrix.size()) {
+		if((i >= matrix.size()) || j >= matrix.size()) {
 			return -1;
 		}
 		return matrix[i][j];		
+	}
+
+	unsigned int Matrix::get_number_edges() {
+		return number_edges;
+	}
+
+	const unsigned int Matrix::get_number_edges() const {
+		return number_edges;
 	}
 
 	ostream& operator <<(ostream& outs, const Matrix& mat) {

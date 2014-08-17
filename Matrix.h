@@ -22,11 +22,15 @@ namespace VAN_MAASTRICHT {
 		// constant member functions
 		const int trace() const;
 		const unsigned int size() const;
+		int get_entry(unsigned int i, unsigned int k);
 		const int get_entry(unsigned int i, unsigned int k) const;
+		unsigned int get_number_edges();
+		const unsigned int get_number_edges() const;
 	
 	private:
 		vector<vector<int> > matrix;
-		int s;
+		unsigned int s;
+		unsigned int number_edges;
 	};
 	// overloaded operators
 	ostream& operator <<(ostream& outs, const Matrix& mat);
