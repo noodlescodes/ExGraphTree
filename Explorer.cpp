@@ -101,7 +101,7 @@ namespace VAN_MAASTRICHT {
 			}
 		}
 		else {
-			explored += pow(2, node->data().size() * root->data().size() -depth) - 1;
+			explored += pow(2, node->data().size() * root->data().size() - depth) - 1;
 		}
 		if(explored > print_check) {
 			cout << "Explored: " << explored << " / " << max_to_explore << " " << (double)explored / max_to_explore * 100 << "%" << endl;
@@ -124,9 +124,9 @@ namespace VAN_MAASTRICHT {
 		if(triangles_exist(node->data())) {		
 			return false;
 		}
-		if(squares_exist(node->data())) {
-			return false;
-		}
+	//if(squares_exist(node->data())) {
+	//		return false;
+	//	}
 		return true;
 	}
 

@@ -48,12 +48,13 @@ void print_tree(BTNode<int> *node, int pos) {
 int main() {
 	time_t start = time(NULL);
 	Matrix b = Matrix();
-	b.set_size(6);
+	b.set_size(4);
 	Explorer *a = new Explorer(new BTNode<Matrix>(b));
 
 	a->explore(a->get_root(), 0, 0, 0);
 	cout << "Number of solutions: " << a->get_number_solutions() << endl;
 	cout << "Max nodes at any one time: " << a->get_max_nodes() << endl;
+	cout << a->get_root()->data() << endl;
 	delete a;
 	cout << "Time taken: " << time(NULL) - start << endl;
 

@@ -42,7 +42,7 @@ namespace VAN_MAASTRICHT {
 		unsigned long long number_of_solutions;
 		unsigned long long print_check;
 		unsigned long long max_nodes;
-		const static unsigned long long print_inc = 1000000;
+		const static unsigned long long print_inc = 5000;
 	};
 }
 
