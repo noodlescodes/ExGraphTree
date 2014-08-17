@@ -12,6 +12,7 @@ namespace VAN_MAASTRICHT {
 	public:
 		// constructor
 		Matrix(const vector<vector<int> > mat = vector<vector<int> >());
+		~Matrix();
 
 		// modification functions
 		int set_entry(unsigned int i, unsigned int j, int data);

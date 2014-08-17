@@ -1,4 +1,5 @@
 #include "Explorer.h"
+#include "BTNode.h"
 #include <cstdlib>
 #include <iostream>
 #include <cmath>
@@ -6,17 +7,17 @@
 namespace VAN_MAASTRICHT {
 	Explorer::Explorer(BTNode<Matrix> *rt) {
 		root = rt;
-		explored = 0;
+		explored = 1;
 		number_of_solutions = 0;
 		print_check = print_inc;
+		max_nodes = 0;
 		if(root->data().size() != 0) {
 			max_to_explore = (unsigned long long) pow(2, root->data().size() * root->data().size());
 		}
 	}
 
 	Explorer::~Explorer() {
-		delete root;
-		root = NULL;
+		clear_tree(root);
 	}
 
 	void Explorer::set_root_matrix(Matrix &m) {
@@ -31,9 +32,13 @@ namespace VAN_MAASTRICHT {
 		return number_of_solutions;
 	}
 
-	void Explorer::explore(BTNode<Matrix> *node, int i, int j, int depth) {
+	unsigned long long Explorer::get_max_nodes() {
+		return max_nodes;
+	}
+
+	/*void Explorer::explore(BTNode<Matrix> *node, int i, int j, int depth) {
 		if(check_valid(node)) {
-			// cout << depth << endl;
+			cout << depth << endl;
 			int size = root->data().size();
 			if((i * size + j) < (size * size)) {
 				explored++;
@@ -45,17 +50,58 @@ namespace VAN_MAASTRICHT {
 				generate_children(node, i, j);
 				explore(node->left(), i_d, j_d, depth + 1);
 				explore(node->right(), i_d, j_d, depth + 1);
-				node->data().set_size(0);
 			}
 			else if(symmetric(node->data())) {
 				number_of_solutions++;
-				//cout << "Have solution" << endl;
+				cout << "Have solution" << endl;
 				//cout << node->data() << endl;
 			}
 		}
 		else {
 			explored += pow(2, root->data().size() * root->data().size() - depth) - 1;
-			node->data().set_size(0);
+		}
+		if(explored > print_check) {
+			cout << "Explored: " << explored << " / " << max_to_explore << " " << (double)explored / max_to_explore * 100 << "%" << endl;
+			cout << "Number solutions: " << number_of_solutions << endl;
+			print_check += print_inc;
+		}
+		}*/
+
+	void Explorer::explore(BTNode<Matrix> *node, int i, int j, int depth) {
+		if(check_valid(node)) {
+			// cout << depth << endl;
+			int size = node->data().size();
+			if((i * size + j) < (size * size)) {
+				int j_d = (j + 1) % size;
+				int i_d = i;
+				if (j_d == 0) {
+					i_d++;
+				}
+				explored++;
+				generate_children(node, i, j);
+				explore(node->left(), i_d, j_d, depth + 1);
+				clear_tree(node->left());
+				explore(node->right(), i_d, j_d, depth + 1);
+				clear_tree(node->right());
+			}
+			else if(symmetric(node->data())) {
+				number_of_solutions++;
+				// cout << "Have solution" << endl;
+				// cout << node->data() << endl;
+				unsigned long long nonodes = tree_size(root);
+				if(nonodes > max_nodes) {
+					max_nodes = nonodes;
+				}
+			}
+			else {
+				unsigned long long nonodes = tree_size(root);
+				if(nonodes > max_nodes) {
+					max_nodes = nonodes;
+				}
+			}
+		}
+		else {
+			explored += pow(2, node->data().size() * root->data().size() -depth) - 1;
 		}
 		if(explored > print_check) {
 			cout << "Explored: " << explored << " / " << max_to_explore << " " << (double)explored / max_to_explore * 100 << "%" << endl;
@@ -140,5 +186,22 @@ namespace VAN_MAASTRICHT {
 	void Explorer::print() {
 		BTNode<Matrix> *a = root;
 		cout << a->right()->right()->data() << endl;
+	}
+
+	void Explorer::print_tree(BTNode<Matrix> *node, int pos) {
+		if(node == NULL) {
+			for(int i = 0; i < pos; i++) {
+				cout << "\t";
+			}
+			cout << "*" << endl;
+		}
+		else {
+			print_tree(node->right(), pos + 1);
+			for(int i = 0; i < pos; i++) {
+				cout << "\t";
+			}
+			cout << node->data() << endl;
+			print_tree(node->left(), pos + 1);
+		}
 	}
 }

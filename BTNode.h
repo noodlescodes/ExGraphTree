@@ -3,45 +3,46 @@
 
 #include <cstdlib>
 
+using namespace std;
+
 namespace VAN_MAASTRICHT {
 
 	template <class Item>
 
 	class BTNode {
 	public:
-		// type def
-		typedef Item value_type;
-
-		// cosntructor
-		BTNode(const Item& initData = Item(), BTNode *left = NULL, BTNode *right = NULL)
-		{
-			data_field = initData;
+		BTNode(const Item& init_data = Item(), BTNode<Item> *left = NULL, BTNode<Item> *right = NULL) {
+			data_field = init_data;
 			left_child = left;
 			right_child = right;
 		}
-		~BTNode() {
-			delete left_child;
-			delete right_child;
-		}
-
-		// Modification functions
-		void set_data(const Item& new_data) {data_field = new_data;}
-		void set_left(BTNode *new_left) {left_child = new_left;}
-		void set_right(BTNode *new_right) {right_child = new_right;}
-
-		// constant member functions
+		
+		//modifcation member functions
 		Item& data() {return data_field;}
+		BTNode<Item>*& left() {return left_child;}
+		BTNode<Item>*& right() {return right_child;}
+		void set_data(const Item& data) {data_field = data;}
+		void set_left(BTNode<Item> *left) {left_child = left;}
+		void set_right(BTNode<Item> *right) {right_child = right;}
+		
+		// constant member functions
 		const Item& data() const {return data_field;}
-		BTNode*& left() {return left_child;}
-		const BTNode* left() const {return left_child;}
-		BTNode*& right() {return right_child;}
-		const BTNode* right() const {return right_child;}
-		bool is_leaf() {return (left_child == NULL) && (right_child == NULL);}
-		const bool is_leaf() const {return (left_child == NULL) && (right_child == NULL);}
+		const BTNode<Item>* left() const {return left_child;}
+		const BTNode<Item>* right() const {return right_child;}
+		bool is_leaf() const {return (left_child == NULL) && (right_child == NULL);}
+
 	private:
 		Item data_field;
 		BTNode *left_child;
 		BTNode *right_child;
 	};
+
+	template <class Item>
+	void clear_tree(BTNode<Item>*& root_ptr);
+
+	template <class Item>
+	size_t tree_size(const BTNode<Item> *root_ptr);
 }
+
+#include "BTree.template"
 #endif

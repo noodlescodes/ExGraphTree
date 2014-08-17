@@ -3,84 +3,49 @@
 #include <ctime>
 #include "BTNode.h"
 #include "Matrix.h"
-#include "BTree.h"
 #include "Explorer.h"
+#include "simpleExplorer.h"
 
 using namespace std;
 using namespace VAN_MAASTRICHT;
 
-int squares(const Matrix &m) {
-	Matrix mm = m * m;
-	Matrix mmmm = mm * mm;
-	int sum = mmmm.trace();
-	int s2 = 0;
-	for(unsigned int i = 0; i < m.size(); i++) {
-		for(unsigned int j = 0; j < m.size(); j++) {
-			s2 += mm.get_entry(i, j);
+void generate_children(BTNode<int> *node) {
+	node->set_left(new BTNode<int>(node->data() * 10));
+	node->set_right(new BTNode<int>(node->data() * 10 + 1));
+}
+
+void explore(BTNode<int> *node, int depth) {
+	if(node->data() == 100) {
+		clear_tree(node->left());
+		clear_tree(node->right());
+	}
+	else {
+		generate_children(node);
+		if(depth < 3) {
+			explore(node->left(), depth + 1);
+			explore(node->right(), depth + 1);
 		}
 	}
-	cout << s2 << endl;
-	int s3 = 0;
-	for(unsigned int i = 0; i < m.size(); i++) {
-		int s = 0;
-		for(unsigned int j = 0; j < m.size(); j++) {
-			s += m.get_entry(i, j);
+}
+
+void print_tree(BTNode<int> *node, int pos) {
+	if(node == NULL) {
+		for(int i = 0; i < pos; i++) {
+			cout << "\t";
 		}
-		if(s > 1) {
-			s3 += ((s * (s - 1)) / 2);
-		}
-		else {
-			s3++;
-		}
+		cout << "*" << endl;
 	}
-	sum = sum - s2 - s3;
-	return sum;
+	else {
+		print_tree(node->right(), pos + 1);
+		for(int i = 0; i < pos; i++) {
+			cout << "\t";
+		}
+		cout << node->data() << endl;
+		print_tree(node->left(), pos + 1);
+	}
 }
 
 int main() {
-	/* BTNode<int>* a = new BTNode<int>(2);
-	cout << a->data() << endl;
-
-	if(a->is_leaf()) {
-		cout << "T" << endl;
-	}
-	else {
-		cout << "F" << endl;
-	}
-
-	a->set_data(3);
-
-	cout << a->data() << endl;
-
-	a->set_left(new BTNode<int>(4));
-
-	if(a->is_leaf()) {
-		cout << "T" << endl;
-	}
-	else {
-		cout << "F" << endl;
-	}
-
-	cout << a->left()->data() << endl;
-
-	delete a;
-
-	Matrix b = Matrix();
-	b.set_size(2);E
-
-	cout << b.size() << endl;
-
-	b.set_entry(0, 0, 1);
-	b.set_entry(1, 1, 1);
-	b.set_entry(0, 1, 1);
-
-	cout << b << endl;
-	cout << b * b << endl;
-	cout << b + b << endl;
-	cout << b % b << endl;
-
-	BTree<int> c = BTree<int>(a); */
-
 	time_t start = time(NULL);
 	Matrix b = Matrix();
 	b.set_size(6);
@@ -88,21 +53,26 @@ int main() {
 
 	a->explore(a->get_root(), 0, 0, 0);
 	cout << "Number of solutions: " << a->get_number_solutions() << endl;
+	cout << "Max nodes at any one time: " << a->get_max_nodes() << endl;
 	delete a;
 	cout << "Time taken: " << time(NULL) - start << endl;
 
-	/*Matrix b = Matrix();
-	b.set_size(4);
-	b.set_entry(0,1,1);
-	b.set_entry(0,2,1);
-	b.set_entry(0,3,1);
-	b.set_entry(1,0,1);
-	b.set_entry(2,0,1);
-	b.set_entry(3,0,1);
+	//simpleExplorer *b = new simpleExplorer(new BTNode<int>(1));
+	//b->explore(b->get_root(), 1);
+	//b->print_tree(b->get_root(), 0);
+	//clear_tree(b->get_root()->left());
+	//clear_tree(b->get_root()->left()->left());
+	//clear_tree(b->get_root()->right()->right());
+	//b->print_tree(b->get_root(), 0);
+	//delete b;
 
-	cout << b << endl;
+	//BTNode<int> *node = new BTNode<int>(1);
+	
+	//explore(node, 1);
 
-	cout << squares(b) << endl;*/
+	//print_tree(node, 0);
+
+	//clear_tree(node);
 
 	return 0;
 }

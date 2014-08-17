@@ -6,6 +6,10 @@ namespace VAN_MAASTRICHT {
 		s = mat.size();
 	}
 
+	Matrix::~Matrix() {
+		matrix.clear();
+	}
+
 	int Matrix::set_entry(unsigned int i, unsigned int j, int data) {
 		if((i >= matrix.size()) || (j >= matrix.size())) {
 			return -1;

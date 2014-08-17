@@ -1,7 +1,7 @@
-SOURCES=test.cpp Explorer.cpp Matrix.cpp BTNode.h BTree.h
+SOURCES=test.cpp simpleExplorer.cpp Explorer.cpp Matrix.cpp BTNode.h
 EXECUTABLE=test
 CC=g++
-CFLAGS=-c -Wall
+CFLAGS=-Wall
 LDFLAGS=
 OBJECTS=$(SOURCES:.cpp=.o)
 
