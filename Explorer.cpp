@@ -118,6 +118,9 @@ namespace VAN_MAASTRICHT {
 	}
 
 	bool Explorer::check_valid(const BTNode<Matrix> *node) {
+		if(!symmetric(node->data())) {
+			return true;
+		}
 		if(triangles_exist(node->data())) {		
 			return false;
 		}
@@ -153,9 +156,9 @@ namespace VAN_MAASTRICHT {
 	}
 
 	bool Explorer::squares_exist(const Matrix &m) {
-		if(!symmetric(m)) {
-			return false;
-		}
+		//if(!symmetric(m)) {
+		//	return false;
+		//}
 		Matrix mm = m * m;
 		Matrix mmmm = mm * mm;
 		int sum = mmmm.trace();
