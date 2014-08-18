@@ -26,6 +26,7 @@ namespace VAN_MAASTRICHT {
 		void generate_children(BTNode<Matrix> *node, unsigned int i, unsigned int j);
 
 		// exploring specific
+		bool continue_heuristics(BTNode<Matrix> *node, int current);
 		bool check_valid(const BTNode<Matrix> *node);
 		bool symmetric(const Matrix &m);
 		bool triangles_exist(const Matrix &m);
@@ -37,12 +38,13 @@ namespace VAN_MAASTRICHT {
 
 	private:
 		BTNode<Matrix>* root;
-		unsigned long long explored;
-		unsigned long long max_to_explore;
+		unsigned long long explored; // change to double
+		unsigned long long max_to_explore; // change to double
 		unsigned long long number_of_solutions;
 		unsigned long long print_check;
 		unsigned long long max_nodes;
-		const static unsigned long long print_inc = 5000;
+		unsigned int max_edges;
+		const static unsigned long long print_inc = 100000000;
 	};
 }
 

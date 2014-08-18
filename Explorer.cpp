@@ -11,6 +11,7 @@ namespace VAN_MAASTRICHT {
 		number_of_solutions = 0;
 		print_check = print_inc;
 		max_nodes = 0;
+		max_edges = 5;
 		if(root->data().size() != 0) {
 			max_to_explore = (unsigned long long) pow(2, root->data().size() * root->data().size());
 		}
@@ -68,7 +69,10 @@ namespace VAN_MAASTRICHT {
 		}*/
 
 	void Explorer::explore(BTNode<Matrix> *node, int i, int j, int depth) {
-		if(check_valid(node)) {
+		if(number_of_solutions > 1) {
+			return;
+		}
+		if(check_valid(node) && continue_heuristics(node, i * node->data().size() + j)) {
 			// cout << depth << endl;
 			int size = node->data().size();
 			if((i * size + j) < (size * size)) {
@@ -86,8 +90,8 @@ namespace VAN_MAASTRICHT {
 			}
 			else if(symmetric(node->data())) {
 				number_of_solutions++;
-				// cout << "Have solution" << endl;
-				// cout << node->data() << endl;
+				cout << "Have solution" << endl;
+				cout << node->data() << endl;
 				unsigned long long nonodes = tree_size(root);
 				if(nonodes > max_nodes) {
 					max_nodes = nonodes;
@@ -117,16 +121,26 @@ namespace VAN_MAASTRICHT {
 		node->set_right(new BTNode<Matrix>(m));
 	}
 
+	bool Explorer::continue_heuristics(BTNode<Matrix> *node, int current) {
+		if(max_edges < node->data().get_number_edges()) {
+			return false;
+		}
+		return true;
+	}
+
 	bool Explorer::check_valid(const BTNode<Matrix> *node) {
+		if(node->data().trace() != 0) {
+			return false;
+		}
 		if(!symmetric(node->data())) {
 			return true;
 		}
 		if(triangles_exist(node->data())) {		
 			return false;
 		}
-	//if(squares_exist(node->data())) {
-	//		return false;
-	//	}
+		if(squares_exist(node->data())) {
+			return false;
+		}
 		return true;
 	}
 
@@ -144,9 +158,9 @@ namespace VAN_MAASTRICHT {
 	}
 
 	bool Explorer::triangles_exist(const Matrix &m) {
-		//if(!symmetric(m)) {
-		//	return false;
-		//}
+		if(!symmetric(m)) {
+			return false;
+		}
 		Matrix mm = m * m;
 		Matrix mmm = m * mm;
 		if(mmm.trace() == 0) {
@@ -156,9 +170,9 @@ namespace VAN_MAASTRICHT {
 	}
 
 	bool Explorer::squares_exist(const Matrix &m) {
-		//if(!symmetric(m)) {
-		//	return false;
-		//}
+		if(!symmetric(m)) {
+			return false;
+		}
 		Matrix mm = m * m;
 		Matrix mmmm = mm * mm;
 		int sum = mmmm.trace();
