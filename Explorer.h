@@ -16,7 +16,6 @@ namespace VAN_MAASTRICHT {
 		// getters
 		BTNode<Matrix>* get_root();
 		unsigned long long get_number_solutions();
-		unsigned long long get_max_nodes();
 
 		// setters
 		void set_root_matrix(Matrix &m);
@@ -38,13 +37,12 @@ namespace VAN_MAASTRICHT {
 
 	private:
 		BTNode<Matrix>* root;
-		unsigned long long explored; // change to double
-		unsigned long long max_to_explore; // change to double
+		double explored; // change to double
+		double max_to_explore; // change to double
 		unsigned long long number_of_solutions;
 		unsigned long long print_check;
-		unsigned long long max_nodes;
 		unsigned int max_edges;
-		const static unsigned long long print_inc = 100;
+		const static unsigned long long print_inc = 10000;
 	};
 }
 

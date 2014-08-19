@@ -53,7 +53,6 @@ int main() {
 
 	a->explore(a->get_root(), 0, 1, 0);
 	cout << "Number of solutions: " << a->get_number_solutions() << endl;
-	cout << "Max nodes at any one time: " << a->get_max_nodes() << endl;
 	delete a;
 	cout << "Time taken: " << time(NULL) - start << endl;
 

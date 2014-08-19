@@ -10,10 +10,9 @@ namespace VAN_MAASTRICHT {
 		explored = 1;
 		number_of_solutions = 0;
 		print_check = print_inc;
-		max_nodes = 0;
 		max_edges = 31;
 		if(root->data().size() != 0) {
-			max_to_explore = (unsigned long long) pow(2, root->data().size() * root->data().size());
+			max_to_explore = (unsigned long long)pow(2,(rt->data().size() - 1) * (rt->data().size() - 2) / 2);
 		}
 	}
 
@@ -31,10 +30,6 @@ namespace VAN_MAASTRICHT {
 
 	unsigned long long Explorer::get_number_solutions() {
 		return number_of_solutions;
-	}
-
-	unsigned long long Explorer::get_max_nodes() {
-		return max_nodes;
 	}
 
 	/*void Explorer::explore(BTNode<Matrix> *node, int i, int j, int depth) {
@@ -93,16 +88,6 @@ namespace VAN_MAASTRICHT {
 				number_of_solutions++;
 				cout << "Have solution" << endl;
 				cout << node->data() << endl;
-				unsigned long long nonodes = tree_size(root);
-				if(nonodes > max_nodes) {
-					max_nodes = nonodes;
-				}
-			}
-			else {
-				unsigned long long nonodes = tree_size(root);
-				if(nonodes > max_nodes) {
-					max_nodes = nonodes;
-				}
 			}
 		}
 		else {
