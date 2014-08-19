@@ -11,7 +11,7 @@ namespace VAN_MAASTRICHT {
 		number_of_solutions = 0;
 		print_check = print_inc;
 		max_nodes = 0;
-		max_edges = 5;
+		max_edges = 31;
 		if(root->data().size() != 0) {
 			max_to_explore = (unsigned long long) pow(2, root->data().size() * root->data().size());
 		}
@@ -69,9 +69,9 @@ namespace VAN_MAASTRICHT {
 		}*/
 
 	void Explorer::explore(BTNode<Matrix> *node, int i, int j, int depth) {
-		if(number_of_solutions > 1) {
-			return;
-		}
+		//if(number_of_solutions > 1) {
+		//	return;
+		//}
 		if(check_valid(node) && continue_heuristics(node, i * node->data().size() + j)) {
 			// cout << depth << endl;
 			int size = node->data().size();
@@ -80,6 +80,7 @@ namespace VAN_MAASTRICHT {
 				int i_d = i;
 				if (j_d == 0) {
 					i_d++;
+					j_d = i_d + 1;
 				}
 				explored++;
 				generate_children(node, i, j);
@@ -88,7 +89,7 @@ namespace VAN_MAASTRICHT {
 				explore(node->right(), i_d, j_d, depth + 1);
 				clear_tree(node->right());
 			}
-			else if(symmetric(node->data())) {
+			else if(max_edges == node->data().get_number_edges()) {
 				number_of_solutions++;
 				cout << "Have solution" << endl;
 				cout << node->data() << endl;
@@ -105,7 +106,7 @@ namespace VAN_MAASTRICHT {
 			}
 		}
 		else {
-			explored += pow(2, node->data().size() * root->data().size() - depth) - 1;
+			explored++;
 		}
 		if(explored > print_check) {
 			cout << "Explored: " << explored << " / " << max_to_explore << " " << (double)explored / max_to_explore * 100 << "%" << endl;
@@ -115,9 +116,10 @@ namespace VAN_MAASTRICHT {
 	}
 
 	void Explorer::generate_children(BTNode<Matrix> *node, unsigned int i, unsigned int j) {
-		Matrix m = node->data();
+		Matrix m(node->data());
 		node->set_left(new BTNode<Matrix>(m));
 		m.set_entry(i, j, 1);
+		m.set_entry(j, i, 1);
 		node->set_right(new BTNode<Matrix>(m));
 	}
 
@@ -129,10 +131,13 @@ namespace VAN_MAASTRICHT {
 	}
 
 	bool Explorer::check_valid(const BTNode<Matrix> *node) {
-		if(node->data().trace() != 0) {
-			return false;
-		}
-		if(!symmetric(node->data())) {
+		//if(node->data().trace() != 0) {
+		//	return false;
+		//}
+		//if(!symmetric(node->data())) {
+		//	return true;
+		//}
+		if(node->data().get_number_edges() == 0) {
 			return true;
 		}
 		if(triangles_exist(node->data())) {		
@@ -158,9 +163,9 @@ namespace VAN_MAASTRICHT {
 	}
 
 	bool Explorer::triangles_exist(const Matrix &m) {
-		if(!symmetric(m)) {
-			return false;
-		}
+		//if(!symmetric(m)) {
+		//	return false;
+		//}
 		Matrix mm = m * m;
 		Matrix mmm = m * mm;
 		if(mmm.trace() == 0) {
@@ -170,9 +175,9 @@ namespace VAN_MAASTRICHT {
 	}
 
 	bool Explorer::squares_exist(const Matrix &m) {
-		if(!symmetric(m)) {
-			return false;
-		}
+		//if(!symmetric(m)) {
+		//	return false;
+		//}
 		Matrix mm = m * m;
 		Matrix mmmm = mm * mm;
 		int sum = mmmm.trace();
@@ -193,7 +198,7 @@ namespace VAN_MAASTRICHT {
 				sum--;
 			}
 		}
-		if(sum == 0) {
+		if(sum <= 0) {
 			return false;
 		}
 

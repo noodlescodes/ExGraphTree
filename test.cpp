@@ -51,7 +51,7 @@ int main() {
 	b.set_size(17);
 	Explorer *a = new Explorer(new BTNode<Matrix>(b));
 
-	a->explore(a->get_root(), 0, 0, 0);
+	a->explore(a->get_root(), 0, 1, 0);
 	cout << "Number of solutions: " << a->get_number_solutions() << endl;
 	cout << "Max nodes at any one time: " << a->get_max_nodes() << endl;
 	delete a;

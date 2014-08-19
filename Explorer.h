@@ -44,7 +44,7 @@ namespace VAN_MAASTRICHT {
 		unsigned long long print_check;
 		unsigned long long max_nodes;
 		unsigned int max_edges;
-		const static unsigned long long print_inc = 100000000;
+		const static unsigned long long print_inc = 100;
 	};
 }
 
