@@ -91,7 +91,7 @@ namespace VAN_MAASTRICHT {
 			}
 		}
 		else {
-			explored += pow(2, (node->data().size - 1) * (node->data().size - 2) - depth) - 1;
+			explored += pow(2, (node->data().size() - 1) * (node->data().size() - 2) - depth) - 1;
 		}
 		if(explored > print_check) {
 			cout << "Explored: " << explored << " / " << max_to_explore << " " << (double)explored / max_to_explore * 100 << "%" << endl;
