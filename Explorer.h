@@ -41,7 +41,7 @@ namespace VAN_MAASTRICHT {
 		double max_to_explore; // change to double
 		unsigned long long number_of_solutions;
 		unsigned long long print_check;
-		unsigned int max_edges;
+		unsigned long long max_edges;
 		const static unsigned long long print_inc = 10000;
 	};
 }

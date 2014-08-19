@@ -10,9 +10,9 @@ namespace VAN_MAASTRICHT {
 		explored = 1;
 		number_of_solutions = 0;
 		print_check = print_inc;
-		max_edges = 31;
+		max_edges = 1000000; // change this number
 		if(root->data().size() != 0) {
-			max_to_explore = (unsigned long long)pow(2,(rt->data().size() - 1) * (rt->data().size() - 2) / 2);
+			max_to_explore = pow(2,(rt->data().size() - 1) * (rt->data().size() - 2) / 2);
 		}
 	}
 
@@ -31,37 +31,6 @@ namespace VAN_MAASTRICHT {
 	unsigned long long Explorer::get_number_solutions() {
 		return number_of_solutions;
 	}
-
-	/*void Explorer::explore(BTNode<Matrix> *node, int i, int j, int depth) {
-		if(check_valid(node)) {
-			cout << depth << endl;
-			int size = root->data().size();
-			if((i * size + j) < (size * size)) {
-				explored++;
-				int j_d = (j + 1) % size;
-				int i_d = i;
-				if(j_d == 0) {
-					i_d++;
-				}				
-				generate_children(node, i, j);
-				explore(node->left(), i_d, j_d, depth + 1);
-				explore(node->right(), i_d, j_d, depth + 1);
-			}
-			else if(symmetric(node->data())) {
-				number_of_solutions++;
-				cout << "Have solution" << endl;
-				//cout << node->data() << endl;
-			}
-		}
-		else {
-			explored += pow(2, root->data().size() * root->data().size() - depth) - 1;
-		}
-		if(explored > print_check) {
-			cout << "Explored: " << explored << " / " << max_to_explore << " " << (double)explored / max_to_explore * 100 << "%" << endl;
-			cout << "Number solutions: " << number_of_solutions << endl;
-			print_check += print_inc;
-		}
-		}*/
 
 	void Explorer::explore(BTNode<Matrix> *node, int i, int j, int depth) {
 		//if(number_of_solutions > 1) {
@@ -84,20 +53,20 @@ namespace VAN_MAASTRICHT {
 				explore(node->right(), i_d, j_d, depth + 1);
 				clear_tree(node->right());
 			}
-			else if(max_edges == node->data().get_number_edges()) {
+			else {
 				number_of_solutions++;
-				cout << "Have solution" << endl;
-				cout << node->data() << endl;
+				//cout << "Have solution" << endl;
+				//cout << node->data() << endl;
 			}
 		}
 		else {
 			explored += pow(2, (node->data().size() - 1) * (node->data().size() - 2) - depth) - 1;
 		}
-		if(explored > print_check) {
-			cout << "Explored: " << explored << " / " << max_to_explore << " " << (double)explored / max_to_explore * 100 << "%" << endl;
-			cout << "Number solutions: " << number_of_solutions << endl;
-			print_check += print_inc;
-		}
+		//if(explored > print_check) {
+		//	cout << "Explored: " << explored << " / " << max_to_explore << " " << (double)explored / max_to_explore * 100 << "%" << endl;
+		//	cout << "Number solutions: " << number_of_solutions << endl;
+		//	print_check += print_inc;
+		//}
 	}
 
 	void Explorer::generate_children(BTNode<Matrix> *node, unsigned int i, unsigned int j) {
@@ -109,19 +78,17 @@ namespace VAN_MAASTRICHT {
 	}
 
 	bool Explorer::continue_heuristics(BTNode<Matrix> *node, int current) {
-		if(max_edges < node->data().get_number_edges()) {
-			return false;
-		}
+		//if(max_edges < node->data().get_number_edges()) {
+		//	return false;
+		//}
+
+		// Also need to make sure I can reach the max number of edges we want
+		// Something with the degree 6 and degree 5 stuff can be done, although that may go into check_valid(const BTNode<Matrix>*)
+
 		return true;
 	}
 
 	bool Explorer::check_valid(const BTNode<Matrix> *node) {
-		//if(node->data().trace() != 0) {
-		//	return false;
-		//}
-		//if(!symmetric(node->data())) {
-		//	return true;
-		//}
 		if(node->data().get_number_edges() == 0) {
 			return true;
 		}
@@ -148,9 +115,6 @@ namespace VAN_MAASTRICHT {
 	}
 
 	bool Explorer::triangles_exist(const Matrix &m) {
-		//if(!symmetric(m)) {
-		//	return false;
-		//}
 		Matrix mm = m * m;
 		Matrix mmm = m * mm;
 		if(mmm.trace() == 0) {
@@ -160,9 +124,6 @@ namespace VAN_MAASTRICHT {
 	}
 
 	bool Explorer::squares_exist(const Matrix &m) {
-		//if(!symmetric(m)) {
-		//	return false;
-		//}
 		Matrix mm = m * m;
 		Matrix mmmm = mm * mm;
 		int sum = mmmm.trace();
