@@ -10,9 +10,9 @@ namespace VAN_MAASTRICHT {
 		explored = 1;
 		number_of_solutions = 0;
 		print_check = print_inc;
-		max_edges = 1000000; // change this number
+		max_edges = 2 * 5;
 		if(root->data().size() != 0) {
-			max_to_explore = pow(2,(rt->data().size() - 1) * (rt->data().size() - 2) / 2);
+			max_to_explore = pow(2,(rt->data().size() - 1) * (rt->data().size()) / 2);
 		}
 	}
 
@@ -33,9 +33,6 @@ namespace VAN_MAASTRICHT {
 	}
 
 	void Explorer::explore(BTNode<Matrix> *node, int i, int j, int depth) {
-		//if(number_of_solutions > 1) {
-		//	return;
-		//}
 		if(check_valid(node) && continue_heuristics(node, i * node->data().size() + j)) {
 			// cout << depth << endl;
 			int size = node->data().size();
@@ -54,19 +51,25 @@ namespace VAN_MAASTRICHT {
 				clear_tree(node->right());
 			}
 			else {
-				number_of_solutions++;
+				if(node->data().get_number_edges() > 5) {
+					cout << "edges: " <<  node->data().get_number_edges() << endl;
+					cout << node->data() << endl;
+				}
+				if(node->data().get_number_edges() == max_edges) {
+					number_of_solutions++;
+				}
 				//cout << "Have solution" << endl;
 				//cout << node->data() << endl;
 			}
 		}
 		else {
-			explored += pow(2, (node->data().size() - 1) * (node->data().size() - 2) - depth) - 1;
+			explored += pow(2, (node->data().size() - 1) * node->data().size() - depth) - 1;
 		}
-		//if(explored > print_check) {
-		//	cout << "Explored: " << explored << " / " << max_to_explore << " " << (double)explored / max_to_explore * 100 << "%" << endl;
-		//	cout << "Number solutions: " << number_of_solutions << endl;
-		//	print_check += print_inc;
-		//}
+		if(explored > print_check) {
+			//cout << "Explored: " << explored << " / " << max_to_explore << " " << (double)explored / max_to_explore * 100 << "%" << endl;
+			//cout << "Number solutions: " << number_of_solutions << endl;
+			print_check += print_inc;
+		}
 	}
 
 	void Explorer::generate_children(BTNode<Matrix> *node, unsigned int i, unsigned int j) {
@@ -140,10 +143,15 @@ namespace VAN_MAASTRICHT {
 			if(s > 1) {
 				sum -= (s * (s - 1)) / 2;
 			}
-			else if (s == 1) {
-				sum--;
-			}
+			//else if (s == 1) {
+			//sum--;
+			//}
 		}
+
+		if(m.get_number_edges() > 8) {
+			cout << "Sum: " << sum << endl;
+		}
+
 		if(sum <= 0) {
 			return false;
 		}

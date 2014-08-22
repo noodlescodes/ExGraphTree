@@ -48,7 +48,7 @@ void print_tree(BTNode<int> *node, int pos) {
 int main() {
 	time_t start = time(NULL);
 	Matrix b = Matrix();
-	b.set_size(11);
+	b.set_size(5);
 	Explorer *a = new Explorer(new BTNode<Matrix>(b));
 
 	a->explore(a->get_root(), 0, 1, 0);
