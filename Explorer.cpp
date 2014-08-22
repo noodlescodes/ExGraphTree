@@ -10,11 +10,12 @@ namespace VAN_MAASTRICHT {
 		explored = 1;
 		number_of_solutions = 0;
 		print_check = print_inc;
-		max_edges = 2 * 10;
+		max_edges = 2 * 16;
 		max_depth = (rt->data().size() - 1) * rt->data().size() / 2;
 		if(root->data().size() != 0) {
 			max_to_explore = pow(2, max_depth);
 		}
+		cout << "Max to explore: " << max_to_explore << endl;
 	}
 
 	Explorer::~Explorer() {
@@ -61,11 +62,11 @@ namespace VAN_MAASTRICHT {
 			}
 		}
 		else {
-			explored += pow(2, (node->data().size() - 1) * node->data().size() - depth) - 1;
+			explored += pow(2, max_depth - depth) - 1;
 		}
 		if(explored > print_check) {
-			//cout << "Explored: " << explored << " / " << max_to_explore << " " << (double)explored / max_to_explore * 100 << "%" << endl;
-			//cout << "Number solutions: " << number_of_solutions << endl;
+			cout << "Explored: " << explored << " / " << max_to_explore << " " << explored / max_to_explore * 100 << "%" << endl;
+			cout << "Number solutions: " << number_of_solutions << endl;
 			print_check += print_inc;
 		}
 	}
@@ -86,7 +87,6 @@ namespace VAN_MAASTRICHT {
 			return false;
 		}
 
-		// Also need to make sure I can reach the max number of edges we want
 		// Something with the degree 6 and degree 5 stuff can be done, although that may go into check_valid(const BTNode<Matrix>*)
 
 		return true;

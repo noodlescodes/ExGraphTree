@@ -43,7 +43,7 @@ namespace VAN_MAASTRICHT {
 		unsigned long long print_check;
 		unsigned long long max_edges;
 		unsigned long long max_depth;
-		const static unsigned long long print_inc = 100;
+		const static unsigned long long print_inc = 1000000000;
 	};
 }
 

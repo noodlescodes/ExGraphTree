@@ -43,7 +43,7 @@ bool squares_exist(const Matrix &m) {
 int main() {
 	time_t start = time(NULL);
 	Matrix b = Matrix();
-	b.set_size(8);
+	b.set_size(11);
 	Explorer *a = new Explorer(new BTNode<Matrix>(b));
 
 	a->explore(a->get_root(), 0, 1, 0);
