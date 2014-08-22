@@ -10,9 +10,10 @@ namespace VAN_MAASTRICHT {
 		explored = 1;
 		number_of_solutions = 0;
 		print_check = print_inc;
-		max_edges = 2 * 5;
+		max_edges = 2 * 10;
+		max_depth = (rt->data().size() - 1) * rt->data().size() / 2;
 		if(root->data().size() != 0) {
-			max_to_explore = pow(2,(rt->data().size() - 1) * (rt->data().size()) / 2);
+			max_to_explore = pow(2, max_depth);
 		}
 	}
 
@@ -33,7 +34,7 @@ namespace VAN_MAASTRICHT {
 	}
 
 	void Explorer::explore(BTNode<Matrix> *node, int i, int j, int depth) {
-		if(check_valid(node) && continue_heuristics(node, i * node->data().size() + j)) {
+		if(check_valid(node) && continue_heuristics(node, depth)) {
 			// cout << depth << endl;
 			int size = node->data().size();
 			if((i * size + j) < (size * size)) {
@@ -50,14 +51,11 @@ namespace VAN_MAASTRICHT {
 				explore(node->right(), i_d, j_d, depth + 1);
 				clear_tree(node->right());
 			}
-			else {
-				if(node->data().get_number_edges() > 5) {
-					cout << "edges: " <<  node->data().get_number_edges() << endl;
-					cout << node->data() << endl;
-				}
-				if(node->data().get_number_edges() == max_edges) {
-					number_of_solutions++;
-				}
+			else if(max_edges == node->data().get_number_edges()) {
+				//cout << "edges: " <<  node->data().get_number_edges() << endl;
+				cout << depth << endl;
+				cout << node->data() << endl;
+				number_of_solutions++;
 				//cout << "Have solution" << endl;
 				//cout << node->data() << endl;
 			}
@@ -80,10 +78,13 @@ namespace VAN_MAASTRICHT {
 		node->set_right(new BTNode<Matrix>(m));
 	}
 
-	bool Explorer::continue_heuristics(BTNode<Matrix> *node, int current) {
-		//if(max_edges < node->data().get_number_edges()) {
-		//	return false;
-		//}
+	bool Explorer::continue_heuristics(BTNode<Matrix> *node, int depth) {
+		if(max_edges < node->data().get_number_edges()) {
+			return false;
+		}
+		if(max_depth - depth + 2 < max_edges - node->data().get_number_edges()) {
+			return false;
+		}
 
 		// Also need to make sure I can reach the max number of edges we want
 		// Something with the degree 6 and degree 5 stuff can be done, although that may go into check_valid(const BTNode<Matrix>*)
@@ -141,18 +142,14 @@ namespace VAN_MAASTRICHT {
 				s += m.get_entry(i, j);
 			}
 			if(s > 1) {
-				sum -= (s * (s - 1)) / 2;
+				sum -= (s * (s - 1));
 			}
-			//else if (s == 1) {
+			//else if(s == 1) {
 			//sum--;
 			//}
 		}
 
-		if(m.get_number_edges() > 8) {
-			cout << "Sum: " << sum << endl;
-		}
-
-		if(sum <= 0) {
+		if(sum == 0) {
 			return false;
 		}
 

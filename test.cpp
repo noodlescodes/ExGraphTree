@@ -9,46 +9,41 @@
 using namespace std;
 using namespace VAN_MAASTRICHT;
 
-void generate_children(BTNode<int> *node) {
-	node->set_left(new BTNode<int>(node->data() * 10));
-	node->set_right(new BTNode<int>(node->data() * 10 + 1));
-}
+bool squares_exist(const Matrix &m) {
 
-void explore(BTNode<int> *node, int depth) {
-	if(node->data() == 100) {
-		clear_tree(node->left());
-		clear_tree(node->right());
-	}
-	else {
-		generate_children(node);
-		if(depth < 3) {
-			explore(node->left(), depth + 1);
-			explore(node->right(), depth + 1);
-		}
-	}
-}
+	Matrix mm = m * m;
+	Matrix mmmm = mm * mm;
+	int sum = mmmm.trace();
 
-void print_tree(BTNode<int> *node, int pos) {
-	if(node == NULL) {
-		for(int i = 0; i < pos; i++) {
-			cout << "\t";
+	for(unsigned int i = 0; i < m.size(); i++) {
+		for(unsigned int j = 0; j < m.size(); j++) {
+			sum -= mm.get_entry(i, j);
 		}
-		cout << "*" << endl;
 	}
-	else {
-		print_tree(node->right(), pos + 1);
-		for(int i = 0; i < pos; i++) {
-			cout << "\t";
+
+	for(unsigned int i = 0; i < m.size(); i++) {
+		int s = 0;
+		for(unsigned int j = 0; j < m.size(); j++) {
+			s += m.get_entry(i, j);
 		}
-		cout << node->data() << endl;
-		print_tree(node->left(), pos + 1);
+		if(s > 1) {
+			sum -= (s * (s - 1));
+		}
 	}
+
+	cout << sum << endl;
+
+	if(sum == 0) {
+		return false;
+	}
+
+	return true;
 }
 
 int main() {
 	time_t start = time(NULL);
 	Matrix b = Matrix();
-	b.set_size(5);
+	b.set_size(8);
 	Explorer *a = new Explorer(new BTNode<Matrix>(b));
 
 	a->explore(a->get_root(), 0, 1, 0);
@@ -56,22 +51,18 @@ int main() {
 	delete a;
 	cout << "Time taken: " << time(NULL) - start << endl;
 
-	//simpleExplorer *b = new simpleExplorer(new BTNode<int>(1));
-	//b->explore(b->get_root(), 1);
-	//b->print_tree(b->get_root(), 0);
-	//clear_tree(b->get_root()->left());
-	//clear_tree(b->get_root()->left()->left());
-	//clear_tree(b->get_root()->right()->right());
-	//b->print_tree(b->get_root(), 0);
-	//delete b;
+	/*Matrix b = Matrix();
+	b.set_size(5);
+	b.set_entry(0, 1, 1);
+	b.set_entry(0, 2, 1);
+	b.set_entry(0, 3, 1);
+	b.set_entry(0, 4, 1);
+	b.set_entry(1, 0, 1);
+	b.set_entry(2, 0, 1);
+	b.set_entry(3, 0, 1);
+	b.set_entry(4, 0, 1);
 
-	//BTNode<int> *node = new BTNode<int>(1);
-	
-	//explore(node, 1);
-
-	//print_tree(node, 0);
-
-	//clear_tree(node);
+	cout << squares_exist(b) << endl;*/
 
 	return 0;
 }
