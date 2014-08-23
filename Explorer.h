@@ -26,6 +26,7 @@ namespace VAN_MAASTRICHT {
 
 		// exploring specific
 		bool continue_heuristics(BTNode<Matrix> *node, int depth);
+		bool degree_sat(const Matrix &m);
 		bool check_valid(const BTNode<Matrix> *node);
 		bool symmetric(const Matrix &m);
 		bool triangles_exist(const Matrix &m);
@@ -45,6 +46,8 @@ namespace VAN_MAASTRICHT {
 		unsigned long long print_check;
 		unsigned long long max_edges;
 		unsigned long long max_depth;
+		unsigned int max_degree;
+		unsigned int min_degree;
 		const static unsigned long long print_inc = 1000000000;
 		vector<unsigned int> max_edges_array;
 	};

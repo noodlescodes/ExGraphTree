@@ -11,6 +11,8 @@ namespace VAN_MAASTRICHT {
 		explored = 1;
 		number_of_solutions = 0;
 		print_check = print_inc;
+		min_degree = max_edges_array[root->data().size()] - max_edges_array[root->data().size() - 1];
+		max_degree = (root->data().size() - 1) / min_degree; // as everything involved is integer this is going to be an integer result which is what is required.
 		max_edges = 2 * max_edges_array[rt->data().size()];
 		max_depth = (rt->data().size() - 1) * rt->data().size() / 2;
 		if(root->data().size() != 0) {
@@ -124,9 +126,23 @@ namespace VAN_MAASTRICHT {
 		if(max_depth - depth + 2 < max_edges - node->data().get_number_edges()) {
 			return false;
 		}
+		if(!degree_sat(node->data())) {
+			return false;
+		}
 
 		// Something with the degree 6 and degree 5 stuff can be done, although that may go into check_valid(const BTNode<Matrix>*)
 		// regarding comment above. Find out formula for maximum degree and maximum number of vertices with that degree instead.
+		// regarding comment above. Still need to find out the maximum number of vertices with that degree. A tighter bound would be nice too.
+
+		return true;
+	}
+
+	bool Explorer::degree_sat(const Matrix &m) {
+		for(unsigned int i = 0; i < m.size(); i++) {
+			if(max_degree < m.get_degree(i)) {
+				return false;
+			}
+		}
 
 		return true;
 	}
