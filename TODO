@@ -1,8 +1,8 @@
- & Implement some sort of threading to search faster.
- - Write solutions to file as they are found (possibly stop after a certain number of solutions). Will probably use another thread to write to file.
- * Have command line argument for which order to search for an ex graph.
- @ Find out maximum degree of vertex, and how many vertices can have that degre.
- @ Find out about n=31 and n=32.
+ & Implement some sort of threading to search faster. (2014-08-22)
+ - Write solutions to file as they are found (possibly stop after a certain number of solutions). Will probably use another thread to write to file. (2014-08-22)
+ * Have command line argument for which order to search for an ex graph. (2014-08-22)
+ @ Find out maximum degree of vertex, and how many vertices can have that degre. (2014-08-23)
+ @ Find out about n=31 and n=32. (2014-08-23)
 
 
 * == easy enough to do.
