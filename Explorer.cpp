@@ -91,8 +91,8 @@ namespace VAN_MAASTRICHT {
 				clear_tree(node->right());
 			}
 			else if(max_edges == node->data().get_number_edges()) {
-				//cout << "edges: " <<  node->data().get_number_edges() << endl;
-				cout << depth << endl;
+				cout << "edges: " << node->data().get_number_edges() << endl;
+				cout << "depth: " << depth << endl;
 				cout << node->data() << endl;
 				number_of_solutions++;
 				//cout << "Have solution" << endl;

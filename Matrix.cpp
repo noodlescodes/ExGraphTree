@@ -5,13 +5,17 @@ namespace VAN_MAASTRICHT {
 		matrix = mat;
 		s = mat.size();
 		number_edges = 0;
-		if(s != 0) {
-			for(unsigned int i = 0; i < s; i++) {
-				for(unsigned int j = 0; j < s; j++) {
-					if(matrix[i][j] == 1) {
-						number_edges++;
-					}
+		for(unsigned int i = 0; i < s; i++) {
+			for(unsigned int j = 0; j < s; j++) {
+				if(matrix[i][j] == 1) {
+					number_edges++;
 				}
+			}
+		}
+		degree = vector<unsigned int>(s);
+		for(unsigned int i = 0; i < s; i++) {
+			for(unsigned int j = 0; j < s; j++) {
+				degree[i] += matrix[i][j];
 			}
 		}
 	}
@@ -27,9 +31,11 @@ namespace VAN_MAASTRICHT {
 		else {
 			if((matrix[i][j] == 0) && (data == 1) ) {
 				number_edges++;
+				degree[i]++;
 			}
 			else if((matrix[i][j] ==  1) && (data == 0)) {
 				number_edges--;
+				degree[i]--;
 			}
 			matrix[i][j] = data;
 		}
@@ -39,7 +45,7 @@ namespace VAN_MAASTRICHT {
 	
 	int Matrix::set_entry_symm(unsigned int i, unsigned int j, int data) {
 		if(set_entry(i, j, data) + set_entry(j, i, data) < 1) {
-			return - 1;
+			return -1;
 		}
 
 		return 1;
@@ -47,6 +53,13 @@ namespace VAN_MAASTRICHT {
 
 	void Matrix::set_matrix(const vector<vector<int> > mat) {
 		matrix = mat;
+		degree.resize(matrix.size());
+		for(unsigned int i = 0; i < degree.size(); i++) {
+			degree[i] = 0;
+			for(unsigned int j = 0; j < degree.size(); j++) {
+				degree[i] += matrix[i][j];
+			}
+		}
 	}
 
 	void Matrix::set_size(const int size) {
@@ -55,6 +68,7 @@ namespace VAN_MAASTRICHT {
 			matrix[i].resize(size);
 		}
 		s = size;
+		degree.resize(size);
 	}
 
 	const int Matrix::trace() const {
@@ -89,6 +103,17 @@ namespace VAN_MAASTRICHT {
 
 	const unsigned int Matrix::get_number_edges() const {
 		return number_edges;
+	}
+
+	unsigned int Matrix::get_degree(unsigned int i) {
+		if(i >= matrix.size()) {
+			return 0; // can't think of anything better to return
+		}
+		return degree[i];
+	}
+
+	const unsigned int Matrix::get_degree(unsigned int i) const {
+		return degree[i];
 	}
 
 	ostream& operator <<(ostream& outs, const Matrix& mat) {

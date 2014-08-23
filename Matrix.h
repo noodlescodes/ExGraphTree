@@ -27,11 +27,14 @@ namespace VAN_MAASTRICHT {
 		const int get_entry(unsigned int i, unsigned int k) const;
 		unsigned int get_number_edges();
 		const unsigned int get_number_edges() const;
+		unsigned int get_degree(unsigned int i);
+		const unsigned int get_degree(unsigned int i) const;
 	
 	private:
 		vector<vector<int> > matrix;
 		unsigned int s;
 		unsigned int number_edges;
+		vector<unsigned int> degree;
 	};
 	// overloaded operators
 	ostream& operator <<(ostream& outs, const Matrix& mat);
