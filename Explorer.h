@@ -36,6 +36,8 @@ namespace VAN_MAASTRICHT {
 		void print_tree(BTNode<Matrix> *node, int pos); // do not use yet
 
 	private:
+		void max_edges_set();
+		
 		BTNode<Matrix>* root;
 		double explored; // change to double
 		double max_to_explore; // change to double
@@ -44,6 +46,7 @@ namespace VAN_MAASTRICHT {
 		unsigned long long max_edges;
 		unsigned long long max_depth;
 		const static unsigned long long print_inc = 1000000000;
+		vector<unsigned int> max_edges_array;
 	};
 }
 
