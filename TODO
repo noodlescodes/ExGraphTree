@@ -1,7 +1,6 @@
  * Add an array that stores the expected number of edges for each graph so I don't have to look it up each time. http://combinatoricswiki.org/wiki/Ex%28n%3B4%29
  & Implement some sort of threading to search faster.
  - Write solutions to file as they are found (possibly stop after a certain number of solutions). Will probably use another thread to write to file.
- * Adjust Matrix class to add entries symmetrically so it's less code to make predefined matrices for when processing for n == 33 starts.
  * Have command line argument for which order to search for an ex graph.
 
 * == easy enough to do.

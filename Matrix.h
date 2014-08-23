@@ -16,6 +16,7 @@ namespace VAN_MAASTRICHT {
 
 		// modification functions
 		int set_entry(unsigned int i, unsigned int j, int data);
+		int set_entry_symm(unsigned int i, unsigned int j, int data);
 		void set_matrix(const vector<vector<int> > mat);
 		void set_size(const int size);
 

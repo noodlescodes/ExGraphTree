@@ -36,6 +36,14 @@ namespace VAN_MAASTRICHT {
 
 		return 1;
 	}
+	
+	int Matrix::set_entry_symm(unsigned int i, unsigned int j, int data) {
+		if(set_entry(i, j, data) + set_entry(j, i, data) < 1) {
+			return - 1;
+		}
+
+		return 1;
+	}
 
 	void Matrix::set_matrix(const vector<vector<int> > mat) {
 		matrix = mat;
