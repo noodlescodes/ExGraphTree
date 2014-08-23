@@ -1,0 +1,31 @@
+ - To reduce the search space, do a transformation on the graph to reduce it to a canocial form such that the graphs have an ordering so as to eliminate isomorphisms.
+ - Search left and right children randomly. That is, change the code snippet:
+
+generate_children(node, i, j);
+explore(node->left(), i_d, j_d, depth + 1);
+clear_tree(node->left());
+explore(node->right(), i_d, j_d, depth + 1);
+clear_tree(node->right());
+
+to something more like
+if(rand() < 0.5) {
+	  generate_children(node, i, j);
+	  explore(node->left(), i_d, j_d, depth + 1);
+	  clear_tree(node->left());
+	  explore(node->right(), i_d, j_d, depth + 1);
+	  clear_tree(node->right());
+}
+else {
+	  generate_children(node, i, j);
+	  explore(node->right(), i_d, j_d, depth + 1);
+	  clear_tree(node->right());
+	  explore(node->left(), i_d, j_d, depth + 1);
+	  clear_tree(node->left());
+}
+
+but I'm not sure how much effect it will have.
+
+* == easy enough to do.
+& == going to take time to get done.
+- == important and have to think of a way to do it nicely.
+@ == need someone else to get information from.
