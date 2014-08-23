@@ -3,7 +3,7 @@
  @ Find out maximum degree of vertex, and how many vertices can have that degre. (2014-08-23)
  @ Find out about n=31 and n=32. (2014-08-23)
  * Change the main file from test.cpp. (2014-08-23)
- * Make a vector in the Matrix class to keep track of the degree of the vertices.
+ * Make a vector in the Matrix class to keep track of the degree of the vertices. (2014-08-23)
 
 
 * == easy enough to do.
