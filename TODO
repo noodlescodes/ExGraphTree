@@ -3,6 +3,8 @@
  @ Find out maximum degree of vertex, and how many vertices can have that degre. (2014-08-23)
  @ Find out about n=31 and n=32. (2014-08-23)
  * Change the main file from test.cpp. (2014-08-23)
+ & Make the tree savable and searchable later. At worse make it savable and we can search from each node manually. (2014-08-24)
+ & Read a predefined matrix from file so as to start searching from there. This is particular to the case 33 but can be used for the previous point as well. (2014-08-24)
 
 
 * == easy enough to do.
