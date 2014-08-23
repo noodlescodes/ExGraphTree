@@ -112,8 +112,7 @@ namespace VAN_MAASTRICHT {
 	void Explorer::generate_children(BTNode<Matrix> *node, unsigned int i, unsigned int j) {
 		Matrix m(node->data());
 		node->set_left(new BTNode<Matrix>(m));
-		m.set_entry(i, j, 1);
-		m.set_entry(j, i, 1);
+		m.set_entry_symm(i, j, 1);
 		node->set_right(new BTNode<Matrix>(m));
 	}
 
@@ -121,11 +120,13 @@ namespace VAN_MAASTRICHT {
 		if(max_edges < node->data().get_number_edges()) {
 			return false;
 		}
+		// I'm not sure why +2 works here, need to give it some thought.
 		if(max_depth - depth + 2 < max_edges - node->data().get_number_edges()) {
 			return false;
 		}
 
 		// Something with the degree 6 and degree 5 stuff can be done, although that may go into check_valid(const BTNode<Matrix>*)
+		// regarding comment above. Find out formula for maximum degree and maximum number of vertices with that degree instead.
 
 		return true;
 	}
