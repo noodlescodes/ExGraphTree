@@ -176,16 +176,9 @@ namespace VAN_MAASTRICHT {
 			}
 		}
 		for(unsigned int i = 0; i < m.size(); i++) {
-			int s = 0;
-			for(unsigned int j = 0; j < m.size(); j++) {
-				s += m.get_entry(i, j);
+			if(m.get_degree(i) > 1) {
+				sum -= m.get_degree(i) * (m.get_degree(i) - 1);
 			}
-			if(s > 1) {
-				sum -= (s * (s - 1));
-			}
-			//else if(s == 1) {
-			//sum--;
-			//}
 		}
 
 		if(sum == 0) {
