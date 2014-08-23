@@ -1,0 +1,5 @@
+(2014-08-24) Added degree tracking and a heuristic to check to make sure the maximum degree possible isn't being exceeded. 
+
+(2014-08-24) Halfway through adding the previous heuristic I ran the program to ensure I had the correct implementation. It was slightly slower when searching for all the ex graphs on 8 vertices. It was taking ~146 seconds (of real time, not processor) instead of ~140 seconds prior. After fully implementing it though the time dropped to ~110 seconds.
+
+(2014-08-24) Currently running the program on 11 vertices. I did that last night too and I started find solutions about 14hrs into running. I hope it is quicker this time.
