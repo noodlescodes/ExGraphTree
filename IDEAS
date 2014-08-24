@@ -24,6 +24,7 @@ else {
 }
 
 but I'm not sure how much effect it will have.
+ - For simpler parallisation, make just the checking of a node parallel rather than searching the tree parallel. Idea taken from older chess programs.
 
 * == easy enough to do.
 & == going to take time to get done.
