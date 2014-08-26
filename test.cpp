@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
 	b.set_size(order);
 	Explorer *a = new Explorer(new BTNode<Matrix>(b));
 
-	a->explore(a->get_root(), 0, 1, 0);
+	a->explore_random(a->get_root(), 0, 1, 0);
 	cout << "Number of solutions: " << a->get_number_solutions() << endl;
 	delete a;
 	cout << "Time taken: " << time(NULL) - start << endl;

@@ -7,6 +7,7 @@
 namespace VAN_MAASTRICHT {
 	Explorer::Explorer(BTNode<Matrix> *rt) {
 		max_edges_set();
+		srand(time(NULL));
 		root = rt;
 		explored = 1;
 		number_of_solutions = 0;
@@ -99,6 +100,52 @@ namespace VAN_MAASTRICHT {
 				number_of_solutions++;
 				//cout << "Have solution" << endl;
 				//cout << node->data() << endl;
+			}
+		}
+		else {
+			explored += pow(2, max_depth - depth) - 1;
+		}
+		if(explored > print_check) {
+			cout << "Explored: " << explored << " / " << max_to_explore << " " << explored / max_to_explore * 100 << "%" << endl;
+			cout << "Number solutions: " << number_of_solutions << endl;
+			print_check += print_inc;
+		}
+	}
+
+	void Explorer::explore_random(BTNode<Matrix> *node, int i, int j, int depth) {
+		if(number_of_solutions > 1) {
+			return;
+		}
+		if(check_valid(node) && continue_heuristics(node, depth)) {
+			// cout << depth << endl;
+			int size = node->data().size();
+			if((i * size + j) < (size * size)) {
+				int j_d = (j + 1) % size;
+				int i_d = i;
+				if (j_d == 0) {
+					i_d++;
+					j_d = i_d + 1;
+				}
+				explored++;
+				generate_children(node, i, j);
+				if(rand() % 2 == 0) {
+					explore_random(node->left(), i_d, j_d, depth + 1);
+					clear_tree(node->left());
+					explore_random(node->right(), i_d, j_d, depth + 1);
+					clear_tree(node->right());
+				}
+				else {
+					explore_random(node->right(), i_d, j_d, depth + 1);
+					clear_tree(node->right());
+					explore_random(node->left(), i_d, j_d, depth + 1);
+					clear_tree(node->left());
+				}
+			}
+			else if(max_edges == node->data().get_number_edges()) {
+				cout << "edges: " << node->data().get_number_edges() << endl;
+				cout << "depth: " << depth << endl;
+				cout << node->data() << endl;
+				number_of_solutions++;
 			}
 		}
 		else {

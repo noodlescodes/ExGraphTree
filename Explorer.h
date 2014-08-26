@@ -22,6 +22,7 @@ namespace VAN_MAASTRICHT {
 
 		// modifiers
 		void explore(BTNode<Matrix> *node, int i, int j, int depth);
+		void explore_random(BTNode<Matrix> *node, int i, int j, int depth);
 		void generate_children(BTNode<Matrix> *node, unsigned int i, unsigned int j);
 
 		// exploring specific
@@ -48,7 +49,7 @@ namespace VAN_MAASTRICHT {
 		unsigned long long max_depth;
 		unsigned int max_degree;
 		unsigned int min_degree;
-		const static unsigned long long print_inc = 1000000000;
+		const static unsigned long long print_inc = 100000000000;
 		vector<unsigned int> max_edges_array;
 	};
 }
