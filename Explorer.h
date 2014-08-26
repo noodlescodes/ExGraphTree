@@ -49,7 +49,7 @@ namespace VAN_MAASTRICHT {
 		unsigned long long max_depth;
 		unsigned int max_degree;
 		unsigned int min_degree;
-		const static unsigned long long print_inc = 100000000000;
+		const static unsigned long long print_inc = 100000;
 		vector<unsigned int> max_edges_array;
 	};
 }

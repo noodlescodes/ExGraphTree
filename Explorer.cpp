@@ -113,7 +113,7 @@ namespace VAN_MAASTRICHT {
 	}
 
 	void Explorer::explore_random(BTNode<Matrix> *node, int i, int j, int depth) {
-		if(number_of_solutions > 1) {
+		if(number_of_solutions >= 1) {
 			return;
 		}
 		if(check_valid(node) && continue_heuristics(node, depth)) {
@@ -151,7 +151,7 @@ namespace VAN_MAASTRICHT {
 		else {
 			explored += pow(2, max_depth - depth) - 1;
 		}
-		if(explored > print_check) {
+		if(explored > print_check && number_of_solutions < 1) {
 			cout << "Explored: " << explored << " / " << max_to_explore << " " << explored / max_to_explore * 100 << "%" << endl;
 			cout << "Number solutions: " << number_of_solutions << endl;
 			print_check += print_inc;
