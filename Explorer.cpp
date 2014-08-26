@@ -11,6 +11,7 @@ namespace VAN_MAASTRICHT {
 		root = rt;
 		explored = 1;
 		number_of_solutions = 0;
+		print_inc = pow(10, 22);
 		print_check = print_inc;
 		min_degree = max_edges_array[root->data().size()] - max_edges_array[root->data().size() - 1];
 		max_degree = (root->data().size() - 1) / min_degree; // as everything involved is integer this is going to be an integer result which is what is required.

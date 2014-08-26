@@ -44,12 +44,12 @@ namespace VAN_MAASTRICHT {
 		double explored; // change to double
 		double max_to_explore; // change to double
 		unsigned long long number_of_solutions;
-		unsigned long long print_check;
+		double print_check;
 		unsigned long long max_edges;
 		unsigned long long max_depth;
 		unsigned int max_degree;
 		unsigned int min_degree;
-		const static unsigned long long print_inc = 100000;
+		double print_inc;
 		vector<unsigned int> max_edges_array;
 	};
 }
